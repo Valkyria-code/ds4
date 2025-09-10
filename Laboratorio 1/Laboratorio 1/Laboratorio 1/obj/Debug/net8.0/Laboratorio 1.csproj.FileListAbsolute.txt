@@ -12,3 +12,4 @@ C:\Users\Usuario\source\repos\ds4\Laboratorio 1\Laboratorio 1\Laboratorio 1\obj\
 C:\Users\Usuario\source\repos\ds4\Laboratorio 1\Laboratorio 1\Laboratorio 1\obj\Debug\net8.0\Laboratorio 1.pdb
 C:\Users\Usuario\source\repos\ds4\Laboratorio 1\Laboratorio 1\Laboratorio 1\obj\Debug\net8.0\Laboratorio 1.genruntimeconfig.cache
 C:\Users\Usuario\source\repos\ds4\Laboratorio 1\Laboratorio 1\Laboratorio 1\obj\Debug\net8.0\ref\Laboratorio 1.dll
+C:\Users\Usuario\source\repos\ds4\Laboratorio 1\Laboratorio 1\Laboratorio 1\obj\Debug\net8.0\Laboratorio 1.sourcelink.json
