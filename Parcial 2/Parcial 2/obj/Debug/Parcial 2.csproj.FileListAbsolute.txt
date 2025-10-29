@@ -1,0 +1,11 @@
+C:\Users\Usuario\source\repos\ds4\Parcial 2\Parcial 2\bin\Debug\Parcial 2.exe.config
+C:\Users\Usuario\source\repos\ds4\Parcial 2\Parcial 2\bin\Debug\Parcial 2.exe
+C:\Users\Usuario\source\repos\ds4\Parcial 2\Parcial 2\bin\Debug\Parcial 2.pdb
+C:\Users\Usuario\source\repos\ds4\Parcial 2\Parcial 2\obj\Debug\Parcial 2.csproj.AssemblyReference.cache
+C:\Users\Usuario\source\repos\ds4\Parcial 2\Parcial 2\obj\Debug\Parcial_2.ventana.resources
+C:\Users\Usuario\source\repos\ds4\Parcial 2\Parcial 2\obj\Debug\Parcial_2.Properties.Resources.resources
+C:\Users\Usuario\source\repos\ds4\Parcial 2\Parcial 2\obj\Debug\Parcial 2.csproj.GenerateResource.cache
+C:\Users\Usuario\source\repos\ds4\Parcial 2\Parcial 2\obj\Debug\Parcial 2.csproj.CoreCompileInputs.cache
+C:\Users\Usuario\source\repos\ds4\Parcial 2\Parcial 2\obj\Debug\Parcial 2.exe
+C:\Users\Usuario\source\repos\ds4\Parcial 2\Parcial 2\obj\Debug\Parcial 2.pdb
+C:\Users\Usuario\source\repos\ds4\Parcial 2\Parcial 2\obj\Debug\Parcial 2.exe.config
