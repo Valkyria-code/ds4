@@ -13,5 +13,10 @@ namespace Laboratorio_16
         {
 
         }
+
+        protected void btn_mensaje_Click(object sender, EventArgs e)
+        {
+            lbl_mensaje.Text = "¡Hola, Mundo en ASP.NET!";
+        }
     }
 }
