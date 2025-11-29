@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Laboratorio 19-1";
+}
+
+<main>
+    <div class="container" style="margin-top: 50px;">
+        <h2>Laboratorio 19-1 - Obtener Todos los Valores del API</h2>
+        <hr />
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger">
+                <strong>Error:</strong> @ViewBag.Error
+            </div>
+        }
+        else if (ViewBag.Valores != null)
+        {
+            <div class="alert alert-success">
+                <strong>Éxito:</strong> @ViewBag.Mensaje
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Valores Obtenidos del API</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        @foreach (var valor in ViewBag.Valores)
+                        {
+                            <li class="list-group-item">@valor</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <div class="well">
+                <h4>Información de la Petición:</h4>
+                <p><strong>Endpoint:</strong> GET api/values</p>
+                <p><strong>Total de elementos:</strong> @ViewBag.Valores.Count</p>
+            </div>
+        }
+    </div>
+</main>

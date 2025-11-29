@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Laboratorio 19-2";
+}
+
+<main>
+    <div class="container" style="margin-top: 50px;">
+        <h2>Laboratorio 19-3 - Obtener Valor con ID Específico</h2>
+        <hr />
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger">
+                <strong>Error:</strong> @ViewBag.Error
+            </div>
+        }
+        else if (ViewBag.Valor != null)
+        {
+            <div class="alert alert-success">
+                <strong>Éxito:</strong> @ViewBag.Mensaje
+            </div>
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Valor Obtenido del API</h3>
+                </div>
+                <div class="panel-body">
+                    <h4>ID solicitado: <span class="label label-primary">@ViewBag.IdBuscado</span></h4>
+                    <hr />
+                    <div class="well well-lg">
+                        <h3>@ViewBag.Valor</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="well">
+                <h4>Información de la Petición:</h4>
+                <p><strong>Endpoint:</strong> GET api/values/@ViewBag.IdBuscado</p>
+                <p><strong>Método HTTP:</strong> GET</p>
+            </div>
+        }
+    </div>
+</main>
