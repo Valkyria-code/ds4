@@ -1,0 +1,210 @@
+﻿@{
+    ViewBag.Title = "Inicio";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var popularRecetas = ViewBag.PopularRecetas as List<Aquí_sí_Sabe.Models.Receta>;
+    var recentRecetas = ViewBag.RecentRecetas as List<Aquí_sí_Sabe.Models.Receta>;
+}
+
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #F4D03F, #F39C12);
+        border-radius: 20px;
+        padding: 4rem 2rem;
+        text-align: center;
+        margin-bottom: 3rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+        .hero-section h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #2C3E50;
+            margin-bottom: 1rem;
+        }
+
+        .hero-section p {
+            font-size: 1.3rem;
+            color: #34495E;
+            margin-bottom: 2rem;
+        }
+
+    .recipe-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transition: all 0.3s;
+        cursor: pointer;
+        height: 100%;
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
+
+        .recipe-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .recipe-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+    .recipe-card-body {
+        padding: 1.5rem;
+    }
+
+    .recipe-card-title {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: #2C3E50;
+        margin-bottom: 0.5rem;
+    }
+
+    .recipe-card-stats {
+        display: flex;
+        justify-content: space-between;
+        color: #7F8C8D;
+        font-size: 0.9rem;
+    }
+
+    .category-badge {
+        display: inline-block;
+        padding: 0.5rem 1.5rem;
+        border-radius: 25px;
+        background-color: white;
+        color: #2C3E50;
+        font-weight: 600;
+        margin: 0.5rem;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        text-decoration: none;
+    }
+
+        .category-badge:hover {
+            background-color: #F39C12;
+            color: white;
+            transform: scale(1.1);
+        }
+
+    .section-title {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #2C3E50;
+        margin: 3rem 0 1.5rem 0;
+        text-align: center;
+    }
+
+    .search-box-hero {
+        display: inline-flex;
+        background-color: white;
+        padding: 0.5rem 1.5rem;
+        border-radius: 30px;
+    }
+
+        .search-box-hero input {
+            border: none;
+            outline: none;
+            width: 300px;
+        }
+
+        .search-box-hero button {
+            background: none;
+            border: none;
+            color: #2C3E50;
+            cursor: pointer;
+        }
+</style>
+
+<!-- Hero Section -->
+<div class="hero-section">
+    <h1>🍳 Bienvenido a Aquí sí Sabe</h1>
+    <p>Descubre, comparte y guarda tus recetas favoritas</p>
+
+    @using (Html.BeginForm("Search", "Receta", FormMethod.Get, new { @class = "search-box-hero" }))
+    {
+        <input type="text" name="q" placeholder="Buscar recetas..." required>
+        <button type="submit">
+            <i class="fas fa-search fa-lg"></i>
+        </button>
+    }
+</div>
+
+<!-- Categories Section -->
+<div class="text-center mb-5">
+    <h3 class="mb-4">Explora por Categoría</h3>
+    <div class="categories-container">
+        <a href="@Url.Action("Index", "Receta", new { category = "Postres" })" class="category-badge">
+            <i class="fas fa-cake-candles"></i> Postres
+        </a>
+        <a href="@Url.Action("Index", "Receta", new { category = "Platos Principales" })" class="category-badge">
+            <i class="fas fa-drumstick-bite"></i> Platos Principales
+        </a>
+        <a href="@Url.Action("Index", "Receta", new { category = "Bebidas" })" class="category-badge">
+            <i class="fas fa-glass-water"></i> Bebidas
+        </a>
+        <a href="@Url.Action("Index", "Receta", new { category = "Ensaladas" })" class="category-badge">
+            <i class="fas fa-leaf"></i> Ensaladas
+        </a>
+        <a href="@Url.Action("Index", "Receta", new { category = "Sopas" })" class="category-badge">
+            <i class="fas fa-bowl-food"></i> Sopas
+        </a>
+    </div>
+</div>
+
+<!-- Popular Recipes Section -->
+<h2 class="section-title">🔥 Recetas Más Populares</h2>
+<div class="row g-4 mb-5">
+    @if (popularRecetas != null && popularRecetas.Any())
+    {
+        foreach (var receta in popularRecetas)
+        {
+            <div class="col-md-4 col-lg-3">
+                <a href="@Url.Action("Details", "Receta", new { id = receta.RecetaId })" class="recipe-card">
+                    <img src="@(receta.DireccionImagen ?? "https://via.placeholder.com/400x300?text=Receta")" alt="@receta.Titulo">
+                    <div class="recipe-card-body">
+                        <div class="recipe-card-title">@receta.Titulo</div>
+                        <small class="text-muted">@receta.Categoria</small>
+                        <div class="recipe-card-stats mt-2">
+                            <span><i class="fas fa-eye"></i> @receta.Vistas</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="col-12 text-center text-muted">No hay recetas populares aún</div>
+    }
+</div>
+
+<!-- Recent Recipes Section -->
+<h2 class="section-title">✨ Recetas Recientes</h2>
+<div class="row g-4 mb-5">
+    @if (recentRecetas != null && recentRecetas.Any())
+    {
+        foreach (var receta in recentRecetas)
+        {
+            <div class="col-md-4 col-lg-3">
+                <a href="@Url.Action("Details", "Receta", new { id = receta.RecetaId })" class="recipe-card">
+                    <img src="@(receta.DireccionImagen ?? "https://via.placeholder.com/400x300?text=Receta")" alt="@receta.Titulo">
+                    <div class="recipe-card-body">
+                        <div class="recipe-card-title">@receta.Titulo</div>
+                        <small class="text-muted">@receta.Categoria</small>
+                        <div class="recipe-card-stats mt-2">
+                            <span><i class="fas fa-eye"></i> @receta.Vistas</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="col-12 text-center text-muted">No hay recetas aún</div>
+    }
+</div>

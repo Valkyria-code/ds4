@@ -1,0 +1,224 @@
+﻿@{
+    ViewBag.Title = "Error";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .error-container {
+        min-height: 60vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+    }
+
+    .error-content {
+        text-align: center;
+        max-width: 600px;
+    }
+
+    .error-icon {
+        font-size: 8rem;
+        color: #E74C3C;
+        margin-bottom: 2rem;
+        animation: pulse 2s infinite;
+    }
+
+    @@keyframes pulse {
+        0%, 100% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.1);
+        }
+    }
+
+    .error-title {
+        font-size: 3rem;
+        font-weight: bold;
+        color: #2C3E50;
+        margin-bottom: 1rem;
+    }
+
+    .error-message {
+        font-size: 1.3rem;
+        color: #7F8C8D;
+        margin-bottom: 2rem;
+        line-height: 1.6;
+    }
+
+    .error-details {
+        background-color: #F8F9FA;
+        border-left: 4px solid #E74C3C;
+        padding: 1.5rem;
+        border-radius: 10px;
+        margin-bottom: 2rem;
+        text-align: left;
+    }
+
+        .error-details h4 {
+            color: #2C3E50;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .error-details p {
+            color: #7F8C8D;
+            margin-bottom: 0.5rem;
+            font-family: monospace;
+        }
+
+    .error-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .btn-home {
+        padding: 1rem 2rem;
+        background: linear-gradient(135deg, #F4D03F, #F39C12);
+        border: none;
+        border-radius: 25px;
+        color: #2C3E50;
+        font-weight: bold;
+        font-size: 1.1rem;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+        .btn-home:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(243, 156, 18, 0.3);
+            color: #2C3E50;
+        }
+
+    .btn-back {
+        padding: 1rem 2rem;
+        background-color: white;
+        border: 2px solid #2C3E50;
+        border-radius: 25px;
+        color: #2C3E50;
+        font-weight: bold;
+        font-size: 1.1rem;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+        .btn-back:hover {
+            background-color: #2C3E50;
+            color: white;
+        }
+
+    .helpful-tips {
+        margin-top: 3rem;
+        padding: 2rem;
+        background-color: #FFFEF7;
+        border-radius: 15px;
+        border: 2px solid #F4D03F;
+    }
+
+        .helpful-tips h4 {
+            color: #2C3E50;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .helpful-tips ul {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        .helpful-tips li {
+            padding: 0.75rem;
+            color: #34495E;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: start;
+            gap: 0.75rem;
+        }
+
+            .helpful-tips li i {
+                color: #F39C12;
+                margin-top: 0.25rem;
+            }
+</style>
+
+<div class="error-container">
+    <div class="error-content">
+        <div class="error-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+
+        <h1 class="error-title">¡Oops! Algo salió mal</h1>
+
+        <p class="error-message">
+            Lo sentimos, ha ocurrido un error inesperado. No te preocupes, nuestro equipo ha sido notificado y estamos trabajando para solucionarlo.
+        </p>
+
+        @if (ViewBag.ErrorMessage != null || ViewBag.ErrorDetails != null)
+        {
+            <div class="error-details">
+                <h4><i class="fas fa-info-circle"></i> Detalles del Error</h4>
+                @if (ViewBag.ErrorMessage != null)
+                {
+                    <p><strong>Mensaje:</strong> @ViewBag.ErrorMessage</p>
+                }
+                @if (ViewBag.ErrorDetails != null)
+                {
+                    <p><strong>Detalles:</strong> @ViewBag.ErrorDetails</p>
+                }
+            </div>
+        }
+
+        <div class="error-actions">
+            <a href="@Url.Action("Index", "Home")" class="btn-home">
+                <i class="fas fa-home"></i> Ir al Inicio
+            </a>
+            <a href="javascript:history.back()" class="btn-back">
+                <i class="fas fa-arrow-left"></i> Volver Atrás
+            </a>
+        </div>
+
+        <div class="helpful-tips">
+            <h4>
+                <i class="fas fa-lightbulb"></i> ¿Qué puedes hacer?
+            </h4>
+            <ul>
+                <li>
+                    <i class="fas fa-redo"></i>
+                    <span>Intenta recargar la página o volver a intentar la acción</span>
+                </li>
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <span>Verifica que todos los datos ingresados sean correctos</span>
+                </li>
+                <li>
+                    <i class="fas fa-wifi"></i>
+                    <span>Asegúrate de tener una conexión a internet estable</span>
+                </li>
+                <li>
+                    <i class="fas fa-envelope"></i>
+                    <span>Si el problema persiste, contáctanos para obtener ayuda</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Log error para debugging (si estamos en desarrollo)
+        console.error('Error page loaded');
+
+        // Opcional: enviar error a un servicio de logging
+        // sendErrorToLoggingService();
+    </script>
+}

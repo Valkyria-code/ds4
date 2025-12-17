@@ -1,0 +1,140 @@
+﻿@model Aquí_sí_Sabe.Models.Receta
+
+@{
+    ViewBag.Title = "Editar Receta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .edit-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        background: white;
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    }
+
+    .edit-header {
+        text-align: center;
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
+        border-bottom: 3px solid #F4D03F;
+    }
+
+        .edit-header h2 {
+            color: #2C3E50;
+            font-weight: bold;
+        }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #2C3E50;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-control, .form-select {
+        border: 2px solid #ECF0F1;
+        border-radius: 10px;
+        padding: 0.75rem;
+    }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #F39C12;
+            box-shadow: 0 0 0 0.2rem rgba(243, 156, 18, 0.25);
+        }
+
+    .btn-update {
+        width: 100%;
+        padding: 0.75rem;
+        background: linear-gradient(135deg, #F4D03F, #F39C12);
+        border: none;
+        border-radius: 10px;
+        color: #2C3E50;
+        font-weight: bold;
+        font-size: 1.1rem;
+    }
+
+    .help-text {
+        font-size: 0.85rem;
+        color: #7F8C8D;
+        margin-top: 0.25rem;
+    }
+</style>
+
+<div class="edit-container">
+    <div class="edit-header">
+        <h2><i class="fas fa-edit"></i> Editar Receta</h2>
+    </div>
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger">@ViewBag.Error</div>
+    }
+
+    @using (Html.BeginForm("Edit", "Receta", FormMethod.Post))
+    {
+        <input type="hidden" name="RecetaId" value="@Model.RecetaId" />
+        <input type="hidden" name="UsuarioId" value="@Model.UsuarioId" />
+
+        <div class="form-group">
+            <label class="form-label">Título de la Receta *</label>
+            <input type="text" class="form-control" name="Titulo" value="@Model.Titulo" required>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Categoría *</label>
+            <select class="form-select" name="Categoria" required>
+                <option value="Postres" @(Model.Categoria == "Postres" ? "selected" : "")>Postres</option>
+                <option value="Platos Principales" @(Model.Categoria == "Platos Principales" ? "selected" : "")>Platos Principales</option>
+                <option value="Bebidas" @(Model.Categoria == "Bebidas" ? "selected" : "")>Bebidas</option>
+                <option value="Ensaladas" @(Model.Categoria == "Ensaladas" ? "selected" : "")>Ensaladas</option>
+                <option value="Sopas" @(Model.Categoria == "Sopas" ? "selected" : "")>Sopas</option>
+                <option value="Entradas" @(Model.Categoria == "Entradas" ? "selected" : "")>Entradas</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Descripción</label>
+            <textarea class="form-control" name="Descripcion" rows="3">@Model.Descripcion</textarea>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Ingredientes *</label>
+            <textarea class="form-control" name="Ingredientes" rows="6" required>@string.Join("\n", Model.Ingredientes.Split('|'))</textarea>
+            <div class="help-text">Separa cada ingrediente con una línea nueva</div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Pasos de Preparación *</label>
+            <textarea class="form-control" name="Pasos" rows="8" required>@string.Join("\n", Model.Pasos.Split('|'))</textarea>
+            <div class="help-text">Separa cada paso con una línea nueva</div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">URL de la Imagen</label>
+            <input type="url" class="form-control" name="DireccionImagen" value="@Model.DireccionImagen">
+        </div>
+
+        <button type="submit" class="btn btn-update">
+            <i class="fas fa-save"></i> Actualizar Receta
+        </button>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        // Convertir saltos de línea en separadores |
+        document.querySelector('form').addEventListener('submit', function (e) {
+            var ingredientes = document.querySelector('[name="Ingredientes"]');
+            var pasos = document.querySelector('[name="Pasos"]');
+
+            ingredientes.value = ingredientes.value.split('\n').filter(l => l.trim()).join('|');
+            pasos.value = pasos.value.split('\n').filter(l => l.trim()).join('|');
+        });
+    </script>
+}

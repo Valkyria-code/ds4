@@ -1,0 +1,139 @@
+﻿@model Aquí_sí_Sabe.Models.Receta
+
+@{
+    ViewBag.Title = "Crear Receta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .create-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        background: white;
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    }
+
+    .create-header {
+        text-align: center;
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
+        border-bottom: 3px solid #F4D03F;
+    }
+
+        .create-header h2 {
+            color: #2C3E50;
+            font-weight: bold;
+        }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #2C3E50;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-control, .form-select {
+        border: 2px solid #ECF0F1;
+        border-radius: 10px;
+        padding: 0.75rem;
+    }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #F39C12;
+            box-shadow: 0 0 0 0.2rem rgba(243, 156, 18, 0.25);
+        }
+
+    .btn-create {
+        width: 100%;
+        padding: 0.75rem;
+        background: linear-gradient(135deg, #F4D03F, #F39C12);
+        border: none;
+        border-radius: 10px;
+        color: #2C3E50;
+        font-weight: bold;
+        font-size: 1.1rem;
+    }
+
+    .help-text {
+        font-size: 0.85rem;
+        color: #7F8C8D;
+        margin-top: 0.25rem;
+    }
+</style>
+
+<div class="create-container">
+    <div class="create-header">
+        <h2><i class="fas fa-plus-circle"></i> Crear Nueva Receta</h2>
+    </div>
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger">@ViewBag.Error</div>
+    }
+
+    @using (Html.BeginForm("Create", "Receta", FormMethod.Post))
+    {
+        <div class="form-group">
+            <label class="form-label">Título de la Receta *</label>
+            <input type="text" class="form-control" name="Titulo" placeholder="Ej: Pastel de Chocolate" required>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Categoría *</label>
+            <select class="form-select" name="Categoria" required>
+                <option value="">Selecciona una categoría</option>
+                <option value="Postres">Postres</option>
+                <option value="Platos Principales">Platos Principales</option>
+                <option value="Bebidas">Bebidas</option>
+                <option value="Ensaladas">Ensaladas</option>
+                <option value="Sopas">Sopas</option>
+                <option value="Entradas">Entradas</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Descripción</label>
+            <textarea class="form-control" name="Descripcion" rows="3" placeholder="Describe tu receta brevemente..."></textarea>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Ingredientes *</label>
+            <textarea class="form-control" name="Ingredientes" rows="6" placeholder="Escribe cada ingrediente en una línea nueva" required></textarea>
+            <div class="help-text">Separa cada ingrediente con una línea nueva. Ejemplo:<br>2 tazas de harina<br>1 taza de azúcar<br>3 huevos</div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Pasos de Preparación *</label>
+            <textarea class="form-control" name="Pasos" rows="8" placeholder="Escribe cada paso en una línea nueva" required></textarea>
+            <div class="help-text">Separa cada paso con una línea nueva. Ejemplo:<br>Precalienta el horno a 180°C<br>Mezcla los ingredientes secos<br>Agrega los huevos uno por uno</div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">URL de la Imagen (opcional)</label>
+            <input type="url" class="form-control" name="DireccionImagen" placeholder="https://ejemplo.com/imagen.jpg">
+            <div class="help-text">Si no proporcionas una imagen, se buscará una automáticamente</div>
+        </div>
+
+        <button type="submit" class="btn btn-create">
+            <i class="fas fa-save"></i> Crear Receta
+        </button>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        // Convertir saltos de línea en separadores |
+        document.querySelector('form').addEventListener('submit', function (e) {
+            var ingredientes = document.querySelector('[name="Ingredientes"]');
+            var pasos = document.querySelector('[name="Pasos"]');
+
+            ingredientes.value = ingredientes.value.split('\n').filter(l => l.trim()).join('|');
+            pasos.value = pasos.value.split('\n').filter(l => l.trim()).join('|');
+        });
+    </script>
+}

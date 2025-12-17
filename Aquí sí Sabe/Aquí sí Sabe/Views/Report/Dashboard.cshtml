@@ -1,0 +1,214 @@
+﻿@{
+    ViewBag.Title = "Reportes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var popularRecetas = ViewBag.PopularRecetas as List<Aquí_sí_Sabe.Models.ReporteRecetaPopular>;
+    var topFavoritos = ViewBag.TopFavoritos as List<Aquí_sí_Sabe.Models.ReporteRecetaPopular>;
+    var userActivity = ViewBag.UserActivity as Aquí_sí_Sabe.Models.ReporteActividadUsuario;
+}
+
+<style>
+    .dashboard-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding: 2rem;
+        background: linear-gradient(135deg, #F4D03F, #F39C12);
+        border-radius: 20px;
+    }
+
+        .dashboard-header h1 {
+            color: #2C3E50;
+            font-weight: bold;
+            margin: 0;
+        }
+
+    .report-card {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
+    }
+
+        .report-card h3 {
+            color: #2C3E50;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+    .recipe-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        background-color: #FFFEF7;
+        border-left: 4px solid #F39C12;
+        border-radius: 5px;
+        margin-bottom: 0.75rem;
+    }
+
+    .recipe-item-title {
+        font-weight: 600;
+        color: #2C3E50;
+        flex: 1;
+    }
+
+    .recipe-item-stats {
+        display: flex;
+        gap: 1rem;
+        color: #7F8C8D;
+        font-size: 0.9rem;
+    }
+
+    .stat-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: linear-gradient(135deg, #F4D03F, #F39C12);
+        color: #2C3E50;
+        border-radius: 20px;
+        font-weight: 600;
+    }
+
+    .user-activity-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .activity-stat {
+        text-align: center;
+        padding: 1.5rem;
+        background: linear-gradient(135deg, #F4D03F, #F39C12);
+        border-radius: 15px;
+    }
+
+    .activity-stat-value {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #2C3E50;
+    }
+
+    .activity-stat-label {
+        color: #34495E;
+        font-weight: 600;
+        margin-top: 0.5rem;
+    }
+
+    .recent-views-list {
+        list-style: none;
+        padding: 0;
+    }
+
+        .recent-views-list li {
+            padding: 0.75rem;
+            background-color: #FFFEF7;
+            margin-bottom: 0.5rem;
+            border-left: 4px solid #E74C3C;
+            border-radius: 5px;
+        }
+</style>
+
+<div class="container">
+    <div class="dashboard-header">
+        <h1><i class="fas fa-chart-bar"></i> Panel de Reportes</h1>
+        <p>Estadísticas y análisis de recetas</p>
+    </div>
+
+    <!-- User Activity Report (Solo si hay usuario logueado) -->
+    @if (userActivity != null)
+    {
+        <div class="report-card">
+            <h3><i class="fas fa-user-circle"></i> Mi Actividad</h3>
+
+            <div class="user-activity-grid">
+                <div class="activity-stat">
+                    <div class="activity-stat-value">@userActivity.TotalRecetasCreadas</div>
+                    <div class="activity-stat-label">Recetas Creadas</div>
+                </div>
+                <div class="activity-stat">
+                    <div class="activity-stat-value">@userActivity.TotalRecetasFavoritas</div>
+                    <div class="activity-stat-label">Favoritos</div>
+                </div>
+                <div class="activity-stat">
+                    <div class="activity-stat-value">@(string.IsNullOrEmpty(userActivity.CategoriaMasUsada) ? "N/A" : userActivity.CategoriaMasUsada)</div>
+                    <div class="activity-stat-label">Categoría Favorita</div>
+                </div>
+            </div>
+
+            @if (userActivity.UltimasRecetasVistas != null && userActivity.UltimasRecetasVistas.Any())
+            {
+                <h5 class="mt-4 mb-3">Últimas Recetas Vistas</h5>
+                <ul class="recent-views-list">
+                    @foreach (var titulo in userActivity.UltimasRecetasVistas)
+                    {
+                        <li><i class="fas fa-eye"></i> @titulo</li>
+                    }
+                </ul>
+            }
+        </div>
+    }
+
+    <!-- Popular Recipes Report -->
+    <div class="report-card">
+        <h3><i class="fas fa-fire"></i> Recetas Más Populares</h3>
+
+        @if (popularRecetas != null && popularRecetas.Any())
+        {
+            foreach (var receta in popularRecetas)
+            {
+                <div class="recipe-item">
+                    <div class="recipe-item-title">
+                        <a href="@Url.Action("Details", "Receta", new { id = receta.RecetaId })" style="color: inherit; text-decoration: none;">
+                            @receta.Titulo
+                        </a>
+                    </div>
+                    <div class="recipe-item-stats">
+                        <span><i class="fas fa-eye"></i> @receta.Vistas</span>
+                        <span><i class="fas fa-heart"></i> @receta.ContadorFavoritos</span>
+                        <span class="stat-badge">
+                            <i class="fas fa-star"></i> @receta.PuntuacionTotal pts
+                        </span>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p class="text-muted text-center">No hay datos disponibles</p>
+        }
+    </div>
+
+    <!-- Top Favorites Report -->
+    <div class="report-card">
+        <h3><i class="fas fa-heart"></i> Recetas Más Guardadas</h3>
+
+        @if (topFavoritos != null && topFavoritos.Any())
+        {
+            foreach (var receta in topFavoritos)
+            {
+                <div class="recipe-item">
+                    <div class="recipe-item-title">
+                        <a href="@Url.Action("Details", "Receta", new { id = receta.RecetaId })" style="color: inherit; text-decoration: none;">
+                            @receta.Titulo
+                        </a>
+                    </div>
+                    <div class="recipe-item-stats">
+                        <span><i class="fas fa-eye"></i> @receta.Vistas</span>
+                        <span class="stat-badge">
+                            <i class="fas fa-heart"></i> @receta.ContadorFavoritos favoritos
+                        </span>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p class="text-muted text-center">No hay datos disponibles</p>
+        }
+    </div>
+</div>
